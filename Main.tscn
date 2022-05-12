@@ -1,0 +1,169 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Login.gd" type="Script" id=1]
+[ext_resource path="res://FindMatch.gd" type="Script" id=2]
+[ext_resource path="res://ReadyScreen.gd" type="Script" id=3]
+[ext_resource path="res://Main.gd" type="Script" id=4]
+[ext_resource path="res://GameManager.gd" type="Script" id=5]
+
+[node name="Main" type="Node2D" groups=["GameWorld"]]
+script = ExtResource( 4 )
+
+[node name="Control" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 300.0
+margin_top = 143.0
+margin_right = 681.0
+margin_bottom = 424.0
+
+[node name="ReadyScreen" type="Control" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+
+[node name="Panel3" type="Panel" parent="Control/ReadyScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/ReadyScreen"]
+margin_left = 10.0
+margin_top = 16.0
+margin_right = 369.0
+margin_bottom = 195.0
+
+[node name="Button" type="Button" parent="Control/ReadyScreen"]
+margin_left = 79.0
+margin_top = 239.0
+margin_right = 293.0
+margin_bottom = 269.0
+text = "Im Ready!"
+
+[node name="FindMatch" type="Control" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="Panel2" type="Panel" parent="Control/FindMatch"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="Label" type="Label" parent="Control/FindMatch"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -51.5
+margin_top = -10.5
+margin_right = 61.5
+margin_bottom = 3.5
+text = "Finding Match......"
+
+[node name="Find Match" type="Button" parent="Control/FindMatch"]
+margin_left = 88.0
+margin_top = 98.0
+margin_right = 287.0
+margin_bottom = 165.0
+text = "Lets Find A Match"
+
+[node name="Login" type="Control" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Panel" type="Panel" parent="Control/Login"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="UsernameLabel" type="RichTextLabel" parent="Control/Login"]
+margin_left = 23.0
+margin_top = 33.0
+margin_right = 239.0
+margin_bottom = 73.0
+text = "Username"
+
+[node name="EmailLabel" type="RichTextLabel" parent="Control/Login"]
+margin_left = 24.0
+margin_top = 67.0
+margin_right = 240.0
+margin_bottom = 107.0
+text = "Email"
+
+[node name="PasswordLabel" type="RichTextLabel" parent="Control/Login"]
+margin_left = 25.0
+margin_top = 100.0
+margin_right = 241.0
+margin_bottom = 140.0
+text = "Password"
+
+[node name="UsernameText" type="LineEdit" parent="Control/Login"]
+margin_left = 119.0
+margin_top = 32.0
+margin_right = 351.0
+margin_bottom = 56.0
+
+[node name="EmailText" type="LineEdit" parent="Control/Login"]
+margin_left = 119.0
+margin_top = 67.0
+margin_right = 351.0
+margin_bottom = 91.0
+
+[node name="PasswordText" type="LineEdit" parent="Control/Login"]
+margin_left = 119.0
+margin_top = 99.0
+margin_right = 351.0
+margin_bottom = 123.0
+
+[node name="Register" type="Button" parent="Control/Login"]
+margin_left = 12.0
+margin_top = 224.0
+margin_right = 156.0
+margin_bottom = 272.0
+text = "Register"
+
+[node name="Login" type="Button" parent="Control/Login"]
+margin_left = 208.0
+margin_top = 224.0
+margin_right = 352.0
+margin_bottom = 272.0
+text = "Login"
+
+[node name="Players" type="Node2D" parent="."]
+script = ExtResource( 5 )
+
+[node name="Player Spawn Points" type="Node2D" parent="Players"]
+
+[node name="Player1" type="Position2D" parent="Players/Player Spawn Points"]
+position = Vector2( 218, 134 )
+
+[node name="Player2" type="Position2D" parent="Players/Player Spawn Points"]
+position = Vector2( 792, 139 )
+
+[node name="Player3" type="Position2D" parent="Players/Player Spawn Points"]
+position = Vector2( 225, 424 )
+
+[node name="Player4" type="Position2D" parent="Players/Player Spawn Points"]
+position = Vector2( 790, 422 )
+
+[node name="PlayersSpawnUnder" type="Node2D" parent="Players"]
+
+[node name="Control2" type="Control" parent="."]
+visible = false
+margin_left = 300.0
+margin_top = 141.0
+margin_right = 684.0
+margin_bottom = 422.0
+
+[node name="Label" type="Label" parent="Control2"]
+margin_left = 96.0
+margin_top = 95.0
+margin_right = 332.0
+margin_bottom = 170.0
+text = "You Lose!"
+
+[connection signal="button_down" from="Control/ReadyScreen/Button" to="Control/ReadyScreen" method="_on_Button_button_down"]
+[connection signal="button_down" from="Control/FindMatch/Find Match" to="Control/FindMatch" method="_on_Find_Match_button_down"]
+[connection signal="button_down" from="Control/Login/Register" to="Control/Login" method="_on_Register_button_down"]
+[connection signal="button_down" from="Control/Login/Login" to="Control/Login" method="_on_Login_button_down"]
