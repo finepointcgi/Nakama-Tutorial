@@ -18,13 +18,15 @@ func _ready():
 	pass # Replace with function body.
 
 func playerReady():
-	OnlineMatch.custom_rpc_sync(self, "playerIsReady", [OnlineMatch.get_my_session_id()])
+	for session_id in readyPlayers:
+		pass
+		#rpc_id( "playerIsReady", [session_id])
 	
 	
-func playerIsReady(id):
+remotesync func playerIsReady(id):
 	$Control/ReadyScreen.setReadyStatus(id, "Ready")
 	
-	if OnlineMatch.is_network_server():
+	if get_tree().is_network_server():
 		readyPlayers[id] = true
 		if readyPlayers.size() == OnlineMatch.players.size():
 			OnlineMatch.start_playing()
@@ -39,9 +41,9 @@ func startGame():
 func HideMatchMakeInterface():
 	$Control.hide()
 func onGameOver(alivePlayers):
-	OnlineMatch.custom_rpc_sync(self, "DetermineWinner" , [alivePlayers])
+	rpc("DetermineWinner" , [alivePlayers])
 	
-func DetermineWinner(alivePlayers :Dictionary):
+remotesync func DetermineWinner(alivePlayers :Dictionary):
 	print(alivePlayers)
 	$Control2.show()
 	if OnlineMatch.get_network_unique_id() in alivePlayers:

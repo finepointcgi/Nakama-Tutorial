@@ -9,7 +9,9 @@ var vector := Vector2.ZERO
 var lookAtVector = 0
 export var Bullet : PackedScene
 signal PlayerHasDied()
-
+var updateFrames = 6
+var currentUpdateFrames = 0
+var shooting = false
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -38,22 +40,27 @@ func _physics_process(delta):
 		vector = move_and_slide(vector * 100, Vector2.UP)
 		look_at(get_global_mouse_position())
 		
-		var shooting = false
+		
 		if Input.is_action_just_pressed("shoot"):
 			shoot($Position2D.global_transform, name)
 			print("shooting")
 			shooting = true
-			
-		OnlineMatch.custom_rpc(self, "UpdateRemotePlayers", [position, rotation, shooting, $Position2D.global_transform, name])
+		currentUpdateFrames += 1
+		if updateFrames == currentUpdateFrames:
+			rpc("UpdateRemotePlayers", [position, rotation, shooting, $Position2D.global_transform, name])
+			shooting = false
+			currentUpdateFrames = 0
 
 func shoot(shootpos, playerWhoShot):
 	var bullet : Area2D = Bullet.instance()
 	get_tree().get_nodes_in_group("GameWorld")[0].add_child(bullet)
 	bullet.transform = shootpos
 
-func UpdateRemotePlayers(currentPosition, currentRotation, shooting, shootPos, playerWhoShot):
-	global_position = currentPosition
-	rotation = currentRotation
+puppet func UpdateRemotePlayers(currentPosition, currentRotation, shooting, shootPos, playerWhoShot):
+	$Tween.interpolate_property(self, "position", global_position, currentPosition, .1, Tween.TRANS_LINEAR)
+	$Tween.start()
+	$Tween2.interpolate_property(self, "rotation", rotation, currentRotation, .1, Tween.TRANS_LINEAR)
+	$Tween2.start()
 	if shooting:
 		print("shooting 2")
 		shoot(shootPos, playerWhoShot)

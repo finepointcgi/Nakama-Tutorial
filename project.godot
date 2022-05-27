@@ -105,8 +105,8 @@ config/icon="res://icon.png"
 [autoload]
 
 Online="*res://addons/NakamaOnline/Online.gd"
-OnlineMatch="*res://addons/NakamaOnline/OnlineMatch.gd"
 Nakama="*res://addons/com.heroiclabs.nakama/Nakama.gd"
+OnlineMatch="*res://addons/nakama-webrtc/OnlineMatch.gd"
 
 [debug]
 
@@ -119,6 +119,10 @@ multirun/other_window_args="join"
 [editor_plugins]
 
 enabled=PoolStringArray( "res://addons/multirun/plugin.cfg" )
+
+[gdnative]
+
+singletons=[ "res://webrtc/webrtc.gdnlib", "res://webrtc_debug/webrtc_debug.gdnlib" ]
 
 [input]
 
