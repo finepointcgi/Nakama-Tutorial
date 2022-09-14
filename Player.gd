@@ -58,6 +58,8 @@ func UpdateRemotePlayers(currentPosition, currentRotation, shooting, shootPos, p
 		print("shooting 2")
 		shoot(shootPos, playerWhoShot)
 		
+func PlayDie():
+	$AnimationPlayer.play("Die")
 func Die():
 	queue_free()
 	emit_signal("PlayerHasDied")
